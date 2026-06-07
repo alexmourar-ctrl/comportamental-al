@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Análise profissional de linguagem corporal e comportamento - Comportamental AL">
+    <title>Comportamental AL</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Splash Screen -->
+        <div id="splash-screen" class="screen active">
+            <div class="splash-content">
+                <div class="splash-logo">
+                    <svg viewBox="0 0 100 100" class="logo-svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#grad1)" stroke-width="2"/>
+                        <path d="M50 20 L50 50 L70 60" fill="none" stroke="url(#grad1)" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="50" cy="50" r="8" fill="url(#grad1)"/>
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea"/>
+                                <stop offset="100%" style="stop-color:#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="splash-title">Comportamental AL</h1>
+                <p class="splash-subtitle">Análise Comportamental Profissional</p>
+                <div class="splash-loading">
+                    <div class="loading-bar">
+                        <div class="loading-progress"></div>
+                    </div>
+                    <span class="loading-text">Carregando modelos de análise...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onboarding -->
+        <div id="onboarding-screen" class="screen">
+            <div class="onboarding-slider">
+                <div class="onboarding-slide active" data-slide="0">
+                    <div class="slide-icon">🧠</div>
+                    <h2>Análise Baseada em Ciência</h2>
+                    <p>Fundamentado nos estudos de Paul Ekman, Joe Navarro e técnicas de análise comportamental reconhecidas mundialmente.</p>
+                </div>
+                <div class="onboarding-slide" data-slide="1">
+                    <div class="slide-icon">📸</div>
+                    <h2>Captura Inteligente</h2>
+                    <p>Use a câmera do celular para fotos e vídeos. A IA detecta automaticamente pontos-chave do corpo e rosto.</p>
+                </div>
+                <div class="onboarding-slide" data-slide="2">
+                    <div class="slide-icon">📊</div>
+                    <h2>Relatórios Detalhados</h2>
+                    <p>Receba análises profissionais com scores, interpretações e recomendações personalizadas.</p>
+                </div>
+                <div class="onboarding-slide" data-slide="3">
+                    <div class="slide-icon">🔒</div>
+                    <h2>100% Privado</h2>
+                    <p>Todas as análises são processadas localmente no seu dispositivo. Nenhum dado sai do seu celular.</p>
+                </div>
+            </div>
+            <div class="onboarding-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <button id="btn-continue" class="btn-primary">Continuar</button>
+        </div>
+
+        <!-- Tela Principal -->
+        <div id="main-screen" class="screen">
+            <header class="app-header">
+                <div class="header-brand">
+                    <span class="brand-icon">🧠</span>
+                    <span class="brand-name">Comportamental AL</span>
+                </div>
+                <button id="btn-menu" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="12" x2="21" y2="12"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Menu Lateral -->
+            <div id="side-menu" class="side-menu hidden">
+                <div class="menu-overlay"></div>
+                <div class="menu-panel">
+                    <div class="menu-header">
+                        <span class="menu-title">Menu</span>
+                        <button id="btn-close-menu" class="btn-icon">✕</button>
+                    </div>
+                    <nav class="menu-nav">
+                        <button class="menu-item" data-screen="main">
+                            <span class="menu-item-icon">🏠</span>
+                            <span>Início</span>
+                        </button>
+                        <button class="menu-item" data-screen="history">
+                            <span class="menu-item-icon">📋</span>
+                            <span>Histórico de Análises</span>
+                        </button>
+                        <button class="menu-item" data-screen="guide">
+                            <span class="menu-item-icon">📖</span>
+                            <span>Guia de Referência</span>
+                        </button>
+                        <button class="menu-item" data-screen="about">
+                            <span class="menu-item-icon">ℹ️</span>
+                            <span>Sobre a Metodologia</span>
+                        </button>
+                        <button class="menu-item" data-screen="settings">
+                            <span class="menu-item-icon">⚙️</span>
+                            <span>Configurações</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Conteúdo Principal -->
+            <div class="main-content">
+                <!-- Seleção de Modo -->
+                <div class="mode-selector">
+                    <h2 class="section-title">Nova Análise</h2>
+                    <p class="section-desc">Escolha como deseja capturar o comportamento</p>
+
+                    <div class="mode-cards">
+                        <button class="mode-card" data-mode="camera-photo">
+                            <div class="mode-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                            </div>
+                            <h3>Foto</h3>
+                            <p>Analise uma pose ou expressão estática</p>
+                            <span class="mode-tag">Rápido</span>
+                        </button>
+
+                        <button class="mode-card" data-mode="camera-video">
+                            <div class="mode-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <polygon points="23 7 16 12 23 17 23 7"/>
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                                </svg>
+                            </div>
+                            <h3>Vídeo</h3>
+                            <p>Analise movimentos, gestos e padrões temporais</p>
+                            <span class="mode-tag">Completo</span>
+                        </button>
+
+                        <button class="mode-card" data-mode="gallery">
+                            <div class="mode-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                            <h3>Galeria</h3>
+                            <p>Selecione fotos ou vídeos já existentes</p>
+                            <span class="mode-tag">Flexível</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas Rápidas -->
+                <div class="quick-stats">
+                    <h2 class="section-title">Suas Estatísticas</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number" id="stat-total">0</span>
+                            <span class="stat-label">Análises Totais</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="stat-avg">--</span>
+                            <span class="stat-label">Pontuação Média</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="stat-streak">0</span>
+                            <span class="stat-label">Dias Seguidos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Análises Recentes -->
+                <div class="recent-analyses">
+                    <div class="section-header">
+                        <h2 class="section-title">Análises Recentes</h2>
+                        <button class="btn-text" id="btn-view-all">Ver todas</button>
+                    </div>
+                    <div id="recent-list" class="recent-list">
+                        <div class="empty-state">
+                            <span class="empty-icon">📋</span>
+                            <p>Nenhuma análise realizada</p>
+                            <p class="empty-sub">Comece sua primeira análise acima</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela da Câmera -->
+        <div id="camera-screen" class="screen">
+            <div class="camera-viewport">
+                <video id="camera-video" autoplay playsinline muted></video>
+                <canvas id="camera-canvas" class="hidden"></canvas>
+                <img id="captured-photo" class="hidden" alt="Capturada">
+                <video id="captured-video" class="hidden" controls></video>
+
+                <!-- Overlay de Guia -->
+                <div class="camera-guide">
+                    <div class="guide-frame">
+                        <div class="guide-corners">
+                            <div class="corner tl"></div>
+                            <div class="corner tr"></div>
+                            <div class="corner bl"></div>
+                            <div class="corner br"></div>
+                        </div>
+                        <div class="guide-instructions">
+                            <p id="guide-text">Posicione a pessoa no centro do frame</p>
+                            <div class="guide-indicators">
+                                <span class="indicator" id="indicator-face">😊 Rosto visível</span>
+                                <span class="indicator" id="indicator-body">🚶 Corpo completo</span>
+                                <span class="indicator" id="indicator-light">💡 Boa iluminação</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Análise em Progresso -->
+                <div id="analyzing-overlay" class="analyzing-overlay hidden">
+                    <div class="analysis-animation">
+                        <div class="scan-ring"></div>
+                        <div class="scan-ring"></div>
+                        <div class="scan-ring"></div>
+                    </div>
+                    <div class="analysis-status">
+                        <h3>Analisando Comportamento</h3>
+                        <p id="analysis-step">Detectando pontos-chave...</p>
+                        <div class="analysis-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="analysis-progress-bar"></div>
+                            </div>
+                            <span class="progress-percent" id="analysis-percent">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles da Câmera -->
+            <div class="camera-controls">
+                <button id="btn-close-camera" class="control-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+
+                <div class="capture-area">
+                    <button id="btn-capture" class="shutter-btn">
+                        <div class="shutter-inner"></div>
+                    </button>
+                    <button id="btn-record" class="record-btn hidden">
+                        <div class="record-circle"></div>
+                    </button>
+                    <button id="btn-stop-record" class="stop-record-btn hidden">
+                        <div class="stop-square"></div>
+                    </button>
+                </div>
+
+                <button id="btn-flip-camera" class="control-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10"/>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Timer de Gravação -->
+            <div id="recording-timer" class="recording-timer hidden">
+                <span class="rec-indicator"></span>
+                <span id="timer-value">00:00</span>
+            </div>
+
+            <!-- Preview e Confirmação -->
+            <div id="preview-controls" class="preview-controls hidden">
+                <button id="btn-retake" class="preview-btn btn-outline">
+                    <span>↺</span>
+                    <span>Tentar Novamente</span>
+                </button>
+                <button id="btn-confirm" class="preview-btn btn-primary">
+                    <span>✓</span>
+                    <span>Analisar</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tela de Resultado -->
+        <div id="result-screen" class="screen">
+            <header class="app-header">
+                <button id="btn-back-result" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                </button>
+                <span class="header-title">Resultado da Análise</span>
+                <button id="btn-share-result" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                        <polyline points="16 6 12 2 8 6"/>
+                        <line x1="12" y1="2" x2="12" y2="15"/>
+                    </svg>
+                </button>
+            </header>
+
+            <div class="result-content">
+                <!-- Mídia Analisada -->
+                <div class="result-media">
+                    <img id="result-image" class="hidden" alt="Análise">
+                    <video id="result-video" class="hidden" controls></video>
+                    <div class="media-badge" id="media-type-badge">FOTO</div>
+                </div>
+
+                <!-- Score Principal -->
+                <div class="main-score-card">
+                    <div class="score-circle">
+                        <svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+                            <circle id="score-circle-progress" cx="60" cy="60" r="54" fill="none" stroke="url(#scoreGrad)" stroke-width="8" 
+                                stroke-dasharray="339.292" stroke-dashoffset="339.292" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                            <defs>
+                                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea"/>
+                                    <stop offset="100%" style="stop-color:#764ba2"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="score-value">
+                            <span id="main-score">0</span>
+                            <span class="score-label">/100</span>
+                        </div>
+                    </div>
+                    <div class="score-info">
+                        <h3 id="score-title">Análise em Andamento</h3>
+                        <p id="score-summary">Processando dados comportamentais...</p>
+                    </div>
+                </div>
+
+                <!-- Categorias de Análise -->
+                <div class="analysis-categories">
+                    <h3 class="categories-title">Dimensões Comportamentais</h3>
+
+                    <div class="category-item" data-category="posture">
+                        <div class="category-header">
+                            <div class="category-icon">🎯</div>
+                            <div class="category-info">
+                                <span class="category-name">Postura e Alinhamento</span>
+                                <span class="category-score" id="cat-posture-score">--</span>
+                            </div>
+                            <button class="category-toggle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="category-details">
+                            <div class="detail-bar">
+                                <div class="detail-fill" id="bar-posture"></div>
+                            </div>
+                            <p class="detail-text" id="desc-posture">Analisando alinhamento da coluna, ombros e base de sustentação...</p>
+                            <div class="detail-tags" id="tags-posture"></div>
+                        </div>
+                    </div>
+
+                    <div class="category-item" data-category="gestures">
+                        <div class="category-header">
+                            <div class="category-icon">✋</div>
+                            <div class="category-info">
+                                <span class="category-name">Gestos e Movimentos</span>
+                                <span class="category-score" id="cat-gesture-score">--</span>
+                            </div>
+                            <button class="category-toggle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="category-details">
+                            <div class="detail-bar">
+                                <div class="detail-fill" id="bar-gesture"></div>
+                            </div>
+                            <p class="detail-text" id="desc-gesture">Avaliando movimentos das mãos, braços e gestos ilustradores...</p>
+                            <div class="detail-tags" id="tags-gesture"></div>
+                        </div>
+                    </div>
+
+                    <div class="category-item" data-category="facial">
+                        <div class="category-header">
+                            <div class="category-icon">😊</div>
+                            <div class="category-info">
+                                <span class="category-name">Expressão Facial</span>
+                                <span class="category-score" id="cat-facial-score">--</span>
+                            </div>
+                            <button class="category-toggle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="category-details">
+                            <div class="detail-bar">
+                                <div class="detail-fill" id="bar-facial"></div>
+                            </div>
+                            <p class="detail-text" id="desc-facial">Detectando emoções através das microexpressões faciais...</p>
+                            <div class="detail-tags" id="tags-facial"></div>
+                        </div>
+                    </div>
+
+                    <div class="category-item" data-category="eye">
+                        <div class="category-header">
+                            <div class="category-icon">👁️</div>
+                            <div class="category-info">
+                                <span class="category-name">Contato Visual</span>
+                                <span class="category-score" id="cat-eye-score">--</span>
+                            </div>
+                            <button class="category-toggle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="category-details">
+                            <div class="detail-bar">
+                                <div class="detail-fill" id="bar-eye"></div>
+                            </div>
+                            <p class="detail-text" id="desc-eye">Analisando direção do olhar, piscar e dilatação pupilar...</p>
+                            <div class="detail-tags" id="tags-eye"></div>
+                        </div>
+                    </div>
+
+                    <div class="category-item" data-category="movement">
+                        <div class="category-header">
+                            <div class="category-icon">🚶</div>
+                            <div class="category-info">
+                                <span class="category-name">Movimento e Marcha</span>
+                                <span class="category-score" id="cat-movement-score">--</span>
+                            </div>
+                            <button class="category-toggle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="category-details">
+                            <div class="detail-bar">
+                                <div class="detail-fill" id="bar-movement"></div>
+                            </div>
+                            <p class="detail-text" id="desc-movement">Avaliando padrão de locomoção, ritmo e amplitude dos movimentos...</p>
+                            <div class="detail-tags" id="tags-movement"></div>
+                        </div>
+                    </div>
+
+                    <div class="category-item" data-category="space">
+                        <div class="category-header">
+                            <div class="category-icon">📐</div>
+                            <div class="category-info">
+                                <span class="category-name">Uso do Espaço (Proxêmica)</span>
+                                <span class="category-score" id="cat-space-score">--</span>
+                            </div>
+                            <button class="category-toggle">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="category-details">
+                            <div class="detail-bar">
+                                <div class="detail-fill" id="bar-space"></div>
+                            </div>
+                            <p class="detail-text" id="desc-space">Analisando ocupação do espaço pessoal e territorialidade...</p>
+                            <div class="detail-tags" id="tags-space"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interpretação Comportamental -->
+                <div class="interpretation-section">
+                    <h3 class="section-title">📝 Interpretação Comportamental</h3>
+                    <div class="interpretation-card">
+                        <div class="interpretation-header">
+                            <span class="interp-badge" id="interp-badge">Analisando</span>
+                            <span class="interp-date" id="interp-date">--</span>
+                        </div>
+                        <div class="interpretation-body" id="interpretation-text">
+                            <p class="interp-loading">Processando padrões comportamentais detectados...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recomendações -->
+                <div class="recommendations-section">
+                    <h3 class="section-title">💡 Recomendações Profissionais</h3>
+                    <div class="recommendations-list" id="recommendations-list">
+                        <div class="rec-item loading">
+                            <span class="rec-icon">⏳</span>
+                            <p>Gerando recomendações personalizadas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referências -->
+                <div class="references-section">
+                    <h3 class="section-title">📚 Baseado em</h3>
+                    <div class="references-list">
+                        <div class="ref-item">
+                            <span class="ref-author">Paul Ekman</span>
+                            <span class="ref-work">Emoções Reveladas / FACS</span>
+                        </div>
+                        <div class="ref-item">
+                            <span class="ref-author">Joe Navarro</span>
+                            <span class="ref-work">O Que Todo Corpo Diz</span>
+                        </div>
+                        <div class="ref-item">
+                            <span class="ref-author">Allan Pease</span>
+                            <span class="ref-work">Linguagem Corporal no Trabalho</span>
+                        </div>
+                        <div class="ref-item">
+                            <span class="ref-author">Desmond Morris</span>
+                            <span class="ref-work">O Macaco Nu / Gestos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações -->
+                <div class="result-actions">
+                    <button id="btn-new-analysis-result" class="btn-primary">
+                        <span>🔄</span>
+                        <span>Nova Análise</span>
+                    </button>
+                    <button id="btn-save-analysis" class="btn-secondary">
+                        <span>💾</span>
+                        <span>Salvar no Histórico</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de Histórico -->
+        <div id="history-screen" class="screen">
+            <header class="app-header">
+                <button id="btn-back-history" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                </button>
+                <span class="header-title">Histórico</span>
+                <button id="btn-clear-all" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                </button>
+            </header>
+            <div class="history-content">
+                <div id="history-list" class="history-list"></div>
+            </div>
+        </div>
+
+        <!-- Tela do Guia -->
+        <div id="guide-screen" class="screen">
+            <header class="app-header">
+                <button id="btn-back-guide" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                </button>
+                <span class="header-title">Guia de Referência</span>
+            </header>
+            <div class="guide-content">
+                <div class="guide-search">
+                    <input type="text" id="guide-search-input" placeholder="Buscar sinal corporal...">
+                </div>
+                <div class="guide-categories">
+                    <button class="guide-cat-btn active" data-cat="all">Todos</button>
+                    <button class="guide-cat-btn" data-cat="face">Rosto</button>
+                    <button class="guide-cat-btn" data-cat="hands">Mãos</button>
+                    <button class="guide-cat-btn" data-cat="posture">Postura</button>
+                    <button class="guide-cat-btn" data-cat="legs">Pernas</button>
+                </div>
+                <div class="guide-items" id="guide-items"></div>
+            </div>
+        </div>
+
+        <!-- Tela Sobre -->
+        <div id="about-screen" class="screen">
+            <header class="app-header">
+                <button id="btn-back-about" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                </button>
+                <span class="header-title">Sobre a Metodologia</span>
+            </header>
+            <div class="about-content">
+                <div class="about-hero">
+                    <div class="about-logo">🧠</div>
+                    <h2>Comportamental AL</h2>
+                    <p>Versão 1.0.0</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>🎯 Nossa Metodologia</h3>
+                    <p>O Comportamental AL utiliza uma abordagem multidisciplinar baseada em décadas de pesquisa científica sobre linguagem corporal e análise comportamental.</p>
+                </div>
+
+                <div class="about-section">
+                    <h3>📖 Fundamentação Teórica</h3>
+                    <div class="theory-list">
+                        <div class="theory-item">
+                            <h4>Sistema de Codificação de Ações Faciais (FACS)</h4>
+                            <p>Desenvolvido por Paul Ekman e Wallace Friesen. Identifica micromovimentos faciais associados a emoções universais.</p>
+                        </div>
+                        <div class="theory-item">
+                            <h4>Análise de Gestos Ilustradores</h4>
+                            <p>Baseado nos trabalhos de David McNeill. Classifica gestos em icônicos, metafóricos, deícticos e batidos.</p>
+                        </div>
+                        <div class="theory-item">
+                            <h4>Proxêmica de Edward Hall</h4>
+                            <p>Análise do uso do espaço pessoal e distâncias sociais em diferentes contextos culturais.</p>
+                        </div>
+                        <div class="theory-item">
+                            <h4>Kinesia e Cinésica</h4>
+                            <p>Estudo do movimento corporal e sua relação com a comunicação não-verbal, fundamentado em Ray Birdwhistell.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h3>⚠️ Limitações e Ética</h3>
+                    <div class="ethics-list">
+                        <p>• A análise de linguagem corporal não é uma ciência exata e deve ser interpretada como indicadores, não como verdades absolutas.</p>
+                        <p>• Sinais individuais não determinam intenções — sempre considere o contexto e padrões múltiplos.</p>
+                        <p>• Diferenças culturais afetam significativamente a expressão corporal.</p>
+                        <p>• Este app é uma ferramenta educacional e profissional, não substitui avaliação de especialistas qualificados.</p>
+                        <p>• Nunca use esta tecnologia para discriminar ou julgar pessoas de forma unilateral.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela de Configurações -->
+        <div id="settings-screen" class="screen">
+            <header class="app-header">
+                <button id="btn-back-settings" class="btn-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12 19 5 12 12 5"/>
+                    </svg>
+                </button>
+                <span class="header-title">Configurações</span>
+            </header>
+            <div class="settings-content">
+                <div class="settings-group">
+                    <h3>Análise</h3>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-name">Nível de Detalhe</span>
+                            <span class="setting-desc">Quão aprofundada é a análise</span>
+                        </div>
+                        <select id="setting-detail" class="setting-select">
+                            <option value="basic">Básico (Rápido)</option>
+                            <option value="standard" selected>Padrão (Recomendado)</option>
+                            <option value="advanced">Avançado (Detalhado)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-name">Idioma dos Relatórios</span>
+                            <span class="setting-desc">Idioma usado nas interpretações</span>
+                        </div>
+                        <select id="setting-lang" class="setting-select">
+                            <option value="pt-BR" selected>Português (Brasil)</option>
+                            <option value="pt-PT">Português (Portugal)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Privacidade</h3>
+                    <div class="setting-item toggle">
+                        <div class="setting-info">
+                            <span class="setting-name">Salvar no Histórico</span>
+                            <span class="setting-desc">Armazenar análises localmente</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-save" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item toggle">
+                        <div class="setting-info">
+                            <span class="setting-name">Modo Anônimo</span>
+                            <span class="setting-desc">Não incluir data/hora nos relatórios</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="setting-anon">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>Sobre</h3>
+                    <div class="setting-item">
+                        <span class="setting-name">Versão do App</span>
+                        <span class="setting-value">1.0.0</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-name">Modelo de IA</span>
+                        <span class="setting-value">TensorFlow.js Pose + Face</span>
+                    </div>
+                    <div class="setting-item">
+                        <span class="setting-name">Processamento</span>
+                        <span class="setting-value">Local (On-device)</span>
+                    </div>
+                </div>
+
+                <button id="btn-reset-data" class="btn-danger">🗑️ Limpar Todos os Dados</button>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- Modal de Confirmação -->
+        <div id="confirm-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-box">
+                <h3 id="confirm-title">Confirmar</h3>
+                <p id="confirm-message">Tem certeza?</p>
+                <div class="modal-actions">
+                    <button id="btn-cancel" class="btn-outline">Cancelar</button>
+                    <button id="btn-confirm-action" class="btn-danger">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.10.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.0/dist/pose-detection.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
